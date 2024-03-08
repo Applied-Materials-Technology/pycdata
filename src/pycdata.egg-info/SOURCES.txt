@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/pycdata/__init__.py
+src/pycdata/pycdata.py
+src/pycdata.egg-info/PKG-INFO
+src/pycdata.egg-info/SOURCES.txt
+src/pycdata.egg-info/dependency_links.txt
+src/pycdata.egg-info/requires.txt
+src/pycdata.egg-info/top_level.txt
