@@ -3,29 +3,32 @@
 pycdata: generate camera data example
 ================================================================================
 '''
-import time
+from pathlib import Path
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
 import pycdata
 
 
 def main() -> None:
-    run_time: float = 1
-    timer = pycdata.Timer(run_time)
-    timer.start()
+    data_gen = pycdata.CameraDataGenerator()
+
+    data_gen.set_target_path(Path('examples/gen_data'))
+
+    image_files = [Path('data/OptSpeckle_5Mpx_2464_2056_width5_8bit_GBlur1.tiff'),
+                   Path('data/OptSpeckle_5Mpx_2464_2056_width5_8bit_GBlur1.tiff')]
+    data_gen.load_image_files(image_files)
+    image = np.array(Image.open(image_files[0]))
+    print(image.dtype == np.uint8)
 
     print("="*80)
-    print("Starting cycles.")
+    print("START.")
     print("="*80)
 
-    count: int  = 0
-    num_cycles = 10
-    while count < num_cycles:
-        if timer.finished():
-            timer.start()
-            count += 1
-            print(f"Cycle {count} finished at {time.perf_counter()}s.")
+    data_gen.generate_data(duration=3.1)
 
     print("="*80)
-    print("Cycles finished.")
+    print("END.")
     print("="*80)
 
 
