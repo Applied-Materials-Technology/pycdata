@@ -1,9 +1,13 @@
-# pycdata
+'''
+================================================================================
+pycdata: mono-repo
+================================================================================
+'''
 from pathlib import Path
 import time
 
-class Timer:
 
+class Timer:
     def __init__(self, run_time: float = 0.0) -> None:
         self._start_time = 0.0
         self._run_time = run_time
