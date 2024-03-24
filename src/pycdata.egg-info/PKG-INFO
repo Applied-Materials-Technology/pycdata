@@ -34,6 +34,7 @@ Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: numpy>=1.26.0
+Requires-Dist: pillow>=10.2.0
 
 # pycdata
 A python toolbox for managing data generated from fusion component validation experiments.

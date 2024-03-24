@@ -1,3 +1,6 @@
+# Packge specific
+examples/gen_data/*
+
 # VS Code
 .vscode/
 

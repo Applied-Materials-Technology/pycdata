@@ -94,7 +94,7 @@ class CameraDataGenerator:
 
 
     def write_traces(self) -> None:
-        pass
+        print('Writing traces')
 
 
     def write_images(self) -> None:
