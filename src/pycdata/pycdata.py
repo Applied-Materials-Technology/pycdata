@@ -9,6 +9,7 @@ import shutil
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
+import csv
 
 
 
@@ -73,7 +74,7 @@ class CameraDataGenerator:
         self._image_count = 0
 
 
-    def generate_data(self, duration: float) -> None:
+    def generate_data(self, duration: float, std_dev: int) -> None:
 
         if duration < 0.0:
             raise DataGeneratorError("Data generation duration must be greater than 0")
@@ -90,22 +91,35 @@ class CameraDataGenerator:
                 print(f'Duration = {duration_timer.elapsed_time()}s')
 
                 self.write_traces()
-                self.write_images()
+                self.write_images(std_dev)
 
 
     def write_traces(self) -> None:
         print('Writing traces')
 
 
-    def write_images(self) -> None:
+    def write_images(self, std_dev) -> None:
 
         for nn,ii in enumerate(self._image_files):
+            #noise = np.random.normal(0, 10, size=ii.shape)
+            #0 = mean, 10 = standard deviation
+            noise = np.random.normal(0, std_dev, size=ii.shape)
+            img_noised = ii + noise
             image_num_str = str(self._image_count).zfill(4)
             save_file = f'{self._image_file_tag}_{image_num_str }_{nn}.tiff'
             save_path = self._target_path / save_file
 
-            im = Image.fromarray(ii)
-            im.save(save_path)
+            #im = Image.fromarray(ii)
+            plt.imsave(save_file, img_noised, cmap="gray")
+            #im.save(save_path)
+            
+            with open("sample.csv", "a") as csvFile:
+                fieldnames = ['Image path']
+                writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
+
+                writer.writeheader()
+                writer.writerow({'Image path': save_path })
+
 
         self._image_count += 1
 
