@@ -101,16 +101,20 @@ class CameraDataGenerator:
     def write_images(self, std_dev) -> None:
 
         for nn,ii in enumerate(self._image_files):
-            #noise = np.random.normal(0, 10, size=ii.shape)
             #0 = mean, 10 = standard deviation
-            noise = np.random.normal(0, std_dev, size=ii.shape)
-            img_noised = ii + noise
+            n_bits = 8
+            #noise = np.random.normal(0, std_dev, size=ii.shape)
+            noise = np.random.default_rng().standard_normal(ii.shape)
+            noise_bits = noise*2**n_bits*std_dev/100
+            img_noised = ii + noise_bits
+            final_image = np.array(img_noised,dtype=np.uint8)
             image_num_str = str(self._image_count).zfill(4)
             save_file = f'{self._image_file_tag}_{image_num_str }_{nn}.tiff'
             save_path = self._target_path / save_file
 
             #im = Image.fromarray(ii)
-            plt.imsave(save_file, img_noised, cmap="gray")
+            #plt.imsave(save_file, img_noised, cmap="gray")
+            plt.imsave(save_file, final_image, cmap="gray")
             #im.save(save_path)
             
             with open("sample.csv", "a") as csvFile:

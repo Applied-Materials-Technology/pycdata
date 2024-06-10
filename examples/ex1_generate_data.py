@@ -29,7 +29,7 @@ def main() -> None:
 
     print("="*80)
     print("END.")
-    print("="*80)
+    print("="*80) 
 
 
 if __name__ == '__main__':
